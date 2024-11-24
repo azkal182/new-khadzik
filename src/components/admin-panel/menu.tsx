@@ -13,8 +13,9 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-  TooltipProvider
+  TooltipProvider,
 } from "@/components/ui/tooltip";
+import { signOut } from "next-auth/react";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -25,35 +26,35 @@ export function Menu({ isOpen }: MenuProps) {
   const menuList = getMenuList(pathname);
 
   return (
-    <ScrollArea className="[&>div>div[style]]:!block">
-      <nav className="mt-8 h-full w-full">
-        <ul className="flex flex-col min-h-[calc(100vh-48px-36px-16px-32px)] lg:min-h-[calc(100vh-32px-40px-32px)] items-start space-y-1 px-2">
+    <ScrollArea className='[&>div>div[style]]:!block'>
+      <nav className='mt-8 h-full w-full'>
+        <ul className='flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px)]'>
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
+                <p className='max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-muted-foreground'>
                   {groupLabel}
                 </p>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
                 <TooltipProvider>
                   <Tooltip delayDuration={100}>
-                    <TooltipTrigger className="w-full">
-                      <div className="w-full flex justify-center items-center">
-                        <Ellipsis className="h-5 w-5" />
+                    <TooltipTrigger className='w-full'>
+                      <div className='flex w-full items-center justify-center'>
+                        <Ellipsis className='h-5 w-5' />
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent side="right">
+                    <TooltipContent side='right'>
                       <p>{groupLabel}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               ) : (
-                <p className="pb-2"></p>
+                <p className='pb-2'></p>
               )}
               {menus.map(
                 ({ href, label, icon: Icon, active, submenus }, index) =>
                   !submenus || submenus.length === 0 ? (
-                    <div className="w-full" key={index}>
+                    <div className='w-full' key={index}>
                       <TooltipProvider disableHoverableContent>
                         <Tooltip delayDuration={100}>
                           <TooltipTrigger asChild>
@@ -65,7 +66,7 @@ export function Menu({ isOpen }: MenuProps) {
                                   ? "secondary"
                                   : "ghost"
                               }
-                              className="w-full justify-start h-10 mb-1"
+                              className='mb-1 h-10 w-full justify-start'
                               asChild
                             >
                               <Link href={href}>
@@ -79,7 +80,7 @@ export function Menu({ isOpen }: MenuProps) {
                                     "max-w-[200px] truncate",
                                     isOpen === false
                                       ? "-translate-x-96 opacity-0"
-                                      : "translate-x-0 opacity-100"
+                                      : "translate-x-0 opacity-100",
                                   )}
                                 >
                                   {label}
@@ -88,7 +89,7 @@ export function Menu({ isOpen }: MenuProps) {
                             </Button>
                           </TooltipTrigger>
                           {isOpen === false && (
-                            <TooltipContent side="right">
+                            <TooltipContent side='right'>
                               {label}
                             </TooltipContent>
                           )}
@@ -96,7 +97,7 @@ export function Menu({ isOpen }: MenuProps) {
                       </TooltipProvider>
                     </div>
                   ) : (
-                    <div className="w-full" key={index}>
+                    <div className='w-full' key={index}>
                       <CollapseMenuButton
                         icon={Icon}
                         label={label}
@@ -109,18 +110,18 @@ export function Menu({ isOpen }: MenuProps) {
                         isOpen={isOpen}
                       />
                     </div>
-                  )
+                  ),
               )}
             </li>
           ))}
-          <li className="w-full grow flex items-end">
+          <li className='flex w-full grow items-end'>
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
-                    variant="outline"
-                    className="w-full justify-center h-10 mt-5"
+                    onClick={() => signOut()}
+                    variant='outline'
+                    className='mt-5 h-10 w-full justify-center'
                   >
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
                       <LogOut size={18} />
@@ -128,7 +129,7 @@ export function Menu({ isOpen }: MenuProps) {
                     <p
                       className={cn(
                         "whitespace-nowrap",
-                        isOpen === false ? "opacity-0 hidden" : "opacity-100"
+                        isOpen === false ? "hidden opacity-0" : "opacity-100",
                       )}
                     >
                       Sign out
@@ -136,7 +137,7 @@ export function Menu({ isOpen }: MenuProps) {
                   </Button>
                 </TooltipTrigger>
                 {isOpen === false && (
-                  <TooltipContent side="right">Sign out</TooltipContent>
+                  <TooltipContent side='right'>Sign out</TooltipContent>
                 )}
               </Tooltip>
             </TooltipProvider>

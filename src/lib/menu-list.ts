@@ -3,9 +3,11 @@ import {
   Users,
   Settings,
   Bookmark,
-  SquarePen,
+  User2Icon,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  DollarSign,
+  Store,
 } from "lucide-react";
 
 type Submenu = {
@@ -36,39 +38,39 @@ export function getMenuList(pathname: string): Group[] {
           href: "/dashboard",
           label: "Dashboard",
           icon: LayoutGrid,
-          submenus: []
-        }
-      ]
+          submenus: [],
+        },
+      ],
     },
     {
-      groupLabel: "Contents",
+      groupLabel: "Master",
       menus: [
         {
-          href: "",
-          label: "Posts",
-          icon: SquarePen,
-          submenus: [
-            {
-              href: "/posts",
-              label: "All Posts"
-            },
-            {
-              href: "/posts/new",
-              label: "New Post"
-            }
-          ]
+          href: "/products",
+          label: "Products",
+          icon: Bookmark,
         },
         {
-          href: "/categories",
-          label: "Categories",
-          icon: Bookmark
+          href: "/member",
+          label: "Member",
+          icon: User2Icon,
+        },
+      ],
+    },
+    {
+      groupLabel: "Transactions",
+      menus: [
+        {
+          href: "/transactions",
+          label: "Transactions",
+          icon: Store,
         },
         {
           href: "/tags",
-          label: "Tags",
-          icon: Tag
-        }
-      ]
+          label: "Pembayaran",
+          icon: DollarSign,
+        },
+      ],
     },
     {
       groupLabel: "Settings",
@@ -76,14 +78,14 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/users",
           label: "Users",
-          icon: Users
+          icon: Users,
         },
         {
           href: "/account",
           label: "Account",
-          icon: Settings
-        }
-      ]
-    }
+          icon: Settings,
+        },
+      ],
+    },
   ];
 }
